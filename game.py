@@ -24,7 +24,6 @@ def game():#遊戲介面
     anser = rd.randint(1000,9999)#定義變數
 
     def enter():#輸入鍵內容
-        num = 0
         guess=guessnumber.get()#遊戲開始
         guess=int(guess)
         if guess>anser:
@@ -36,10 +35,6 @@ def game():#遊戲介面
         if guess == anser:
             messagebox.showinfo("猜中了","恭喜你，猜中了，請按開始遊戲重新開始")
             win2.destroy()
-    
-    def funny():
-        messagebox.showinfo("有問題嗎?","就叫你別按了，還按???")
-        win2.destroy()
 
     def stopgame():#結束按鈕內容
       MsgBox = messagebox.askquestion ('結束','重新進入後，會重新開始新遊戲，是否繼續退出?',icon = 'error')
@@ -49,11 +44,9 @@ def game():#遊戲介面
           messagebox.showinfo('歡迎','歡迎回來')
 
     enterbutton = Button(win2,text = '確定',command = enter,bg = 'forestgreen' ,width=10,height=5)#輸入按鈕
-    funnybutton = Button(win2,text = '別按',command = funny, bg = 'orange', width=10,height=5)#搞怪按鈕
     stopgamebtn = Button(win2,text = '結束',command = stopgame, bg = 'crimson', width=10,height=5)#結束按鈕
-    enterbutton.place(x=160,y=60)
-    funnybutton.place(x=40,y=60)
-    stopgamebtn.place(x=280,y=60)
+    enterbutton.place(x=70,y=60)
+    stopgamebtn.place(x=250,y=60)
     creatname3 = Label(win2,text = '創作者:李彥璋',bg = 'lightpink' ).place(x=320,y=157)
     creatname4 = Label(win2,text = '曲采妮',bg = 'lightpink' ).place(x=359,y=180)
 
