@@ -3,7 +3,7 @@ import random as rd
 from tkinter import messagebox
 
 def gameover():#結束遊戲內容
-      MsgBox = messagebox.askquestion ('結束遊戲','是否繼續退出?',icon = 'error')
+      MsgBox = messagebox.askquestion ('結束遊戲','是否結束遊戲?',icon = 'error')
       if MsgBox == 'yes':
           win1.destroy()
       else:
@@ -12,52 +12,34 @@ def gameover():#結束遊戲內容
 def game():#遊戲介面
     win2 = Tk()#視窗
     win2.title("開始遊戲")
+    win2.configure(bg = 'lightpink' )
     win2.geometry("400x200")
 
-    guessLabel = Label(win2,text='請輸入一組2位數')#玩家輸入的地方
-    guessnumber = Entry(win2)
-    guessLabel.pack()
-    guessnumber.pack() 
+    guessLabel = Label(win2,text='請輸入一組4位數:',bg = 'lightpink' ,font = (24))#玩家輸入的地方
+    var = StringVar()
+    guessnumber = Entry(win2,textvariable=var,bg = 'lightgray')
+    guessLabel.place(x=40,y=20)
+    guessnumber.place(x=210,y=25) 
     
-    anser = rd.randint(10,99)#定義變數
+    anser = rd.randint(1000,9999)#定義變數
 
     def enter():#輸入鍵內容
         num = 0
-        play = True
-        while True:#遊戲開始
-            guess = int(guessnumber.get())
-            if anser == guess:
-                num+=1
-                play = False
-                MsgBox = messagebox.askquestion ('獲勝','恭喜你贏得勝利，是否繼續下一局?',icon = 'warning')
-                if MsgBox == 'yes':
-                    reset()
-                else:
-                    win2.destroy()
-            elif anser < guess:
-                Label(win2,text = '太大了，再小一點!')
-                num+=1
-            else :
-                Label(win2,text = '太小了，再大一點!')
-                num+=1
-
-        def numguess():#猜的次數
-            if num == 1 :
-                Label(win2,text = '好厲害，一次就答對了')
-            elif 1 < num < 20 :
-                Label(win2,text = '不錯喔，你很有實力!')
-            else :
-                Label(win2,text = '再加油吧，已經猜超過20次了!')
-
-    def reset():#重玩內容
-        global num
-        global running
-        anser = rd.randint(10,99)
-        num = 0
-        running = True
-        guessnumber.delete(0,'end')
-        resetlabel = messagebox.showinfo('重新開始','重新一局新遊戲')
-
+        guess=guessnumber.get()#遊戲開始
+        guess=int(guess)
+        if guess>anser:
+            messagebox.showinfo("未猜中","太大了，再小一點")
+            guessnumber.delete(0,'end')
+        if guess < anser:
+            messagebox.showinfo("未猜中","太小了，再大一點")
+            guessnumber.delete(0,'end')
+        if guess == anser:
+            messagebox.showinfo("猜中了","恭喜你，猜中了，請按開始遊戲重新開始")
+            win2.destroy()
+    
+    def funny():
+        messagebox.showinfo("有問題嗎?","就叫你別按了，還按???")
+        win2.destroy()
 
     def stopgame():#結束按鈕內容
       MsgBox = messagebox.askquestion ('結束','重新進入後，會重新開始新遊戲，是否繼續退出?',icon = 'error')
@@ -66,23 +48,30 @@ def game():#遊戲介面
       else:
           messagebox.showinfo('歡迎','歡迎回來')
 
-    enterbutton = Button(win2,text = '確定',command = enter)#輸入按鈕
-    resetbutton = Button(win2,text = '重新一局',command = reset)#重玩按鈕
-    stopgamebtn = Button(win2,text = '結束',command = stopgame)#結束按鈕
-    enterbutton.pack()
-    resetbutton.pack()
-    stopgamebtn.pack()
+    enterbutton = Button(win2,text = '確定',command = enter,bg = 'forestgreen' ,width=10,height=5)#輸入按鈕
+    funnybutton = Button(win2,text = '別按',command = funny, bg = 'orange', width=10,height=5)#搞怪按鈕
+    stopgamebtn = Button(win2,text = '結束',command = stopgame, bg = 'crimson', width=10,height=5)#結束按鈕
+    enterbutton.place(x=160,y=60)
+    funnybutton.place(x=40,y=60)
+    stopgamebtn.place(x=280,y=60)
+    creatname3 = Label(win2,text = '創作者:李彥璋',bg = 'lightpink' ).place(x=320,y=157)
+    creatname4 = Label(win2,text = '曲采妮',bg = 'lightpink' ).place(x=359,y=180)
 
     win2.mainloop()
 
 win1 = Tk()  #開始畫面
 win1.title("歡迎來到猜數字遊戲")
+win1.configure(bg = 'lightblue' )
 win1.geometry("400x200")
 
-startgamebutton = Button(win1,text="開始遊戲",bg="green",command = game)#開始遊戲按鈕
-startgamebutton.pack()
+namelabel = Label(win1,text = '~~猜猜樂~~',bg = 'lightblue' ,font = (48)).place(x=150,y=10)
+creatname1 = Label(win1,text = '創作者:李彥璋',bg = 'lightblue' ).place(x=320,y=157)
+creatname2 = Label(win1,text = '曲采妮',bg = 'lightblue' ).place(x=359,y=180)
 
-gameoverbutton = Button(win1,text="結束遊戲",bg='red',command=gameover)#結束遊戲按鈕
-gameoverbutton.pack()
+startgamebutton = Button(win1,text="開始遊戲",bg="green",command = game, width=10,height=5)#開始遊戲按鈕
+startgamebutton.place(x=70,y=60)
+
+gameoverbutton = Button(win1,text="結束遊戲",bg='red',command=gameover, width=10,height=5)#結束遊戲按鈕
+gameoverbutton.place(x=250,y=60)
 
 win1.mainloop()
